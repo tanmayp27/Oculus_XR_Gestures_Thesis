@@ -5,7 +5,7 @@ using UnityEngine;
 public class rotateObject : MonoBehaviour
 {
 
-    Quaternion startRotation;
+    /*Quaternion startRotation;
     Quaternion endRotation;
     float rotationProgress = -1;
 
@@ -25,11 +25,20 @@ public class rotateObject : MonoBehaviour
     {
         if (rotationProgress < 1 && rotationProgress >= 0)
         {
-            rotationProgress += Time.deltaTime * 5;
+            rotationProgress += Time.deltaTime * 2;
 
             // Here we assign the interpolated rotation to transform.rotation
             // It will range from startRotation (rotationProgress == 0) to endRotation (rotationProgress >= 1)
             transform.rotation = Quaternion.Lerp(startRotation, endRotation, rotationProgress);
         }
+    } */
+
+    [SerializeField] float rotationAngle = 45f;
+    [SerializeField] Transform axis;
+
+    public void RotateObject(float direction)
+    {
+        Vector3 rotationAxis = axis.position;
+        transform.RotateAround(rotationAxis, Vector3.up, rotationAngle * direction);
     }
 }
