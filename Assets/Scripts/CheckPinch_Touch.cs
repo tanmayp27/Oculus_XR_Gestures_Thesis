@@ -28,7 +28,7 @@ public class CheckTouch : MonoBehaviour
             currentMaterial.SetFloat("_Metallic", _pinchStrength);
         }
 
-        if (!_hasPinched && _isIndexFingerPinching && _trackingConfidence == OVRHand.TrackingConfidence.High && handTouch.CurrentTarget)
+        if (!_hasPinched && _isIndexFingerPinching && _trackingConfidence == OVRHand.TrackingConfidence.High) //&& handTouch.CurrentTarget
         {
             _hasPinched = true;
             handTouch.showRaycast = true;

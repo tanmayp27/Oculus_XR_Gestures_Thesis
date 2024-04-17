@@ -23,13 +23,23 @@ public class HandTouch : MonoBehaviour
     // Update is called once per frame
     public void HandTouched(GameObject obj)
     {
-        CurrentTarget = obj;
-        UpdateRayVisualization(obj.transform.position, rightHand.PointerPose.position, true);
+        while (pinch._hasPinched)
+        {
+            CurrentTarget = obj;
+            UpdateRayVisualization(obj.transform.position, rightHand.PointerPose.position, true);
+        }
+
+        Debug.Log("Object selected", obj);
+        
     }
 
     public void HandReleased()
     {
-        UpdateRayVisualization(rightHand.PointerPose.position, rightHand.PointerPose.position + rightHand.PointerPose.forward * 1000, false);
+        if (!pinch._hasPinched){
+            UpdateRayVisualization(rightHand.PointerPose.position, rightHand.PointerPose.position + rightHand.PointerPose.forward * 1000, false);
+            Debug.Log("Object released");
+        }
+        
     }
 
     private void UpdateRayVisualization(Vector3 startPosition, Vector3 endPosition, bool hitSomething)
@@ -46,6 +56,8 @@ public class HandTouch : MonoBehaviour
             lineRenderer.enabled = false;
         }
     }
+
+
 
     // Start is called before the first frame update
     void Start()
