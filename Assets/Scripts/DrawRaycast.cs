@@ -13,6 +13,8 @@ public class DrawRaycast : MonoBehaviour
 
     private LineRenderer lineRenderer;
 
+     [HideInInspector] public MeshRenderer renderer;
+
 
     private bool isGrabbed=false;
     //private Renderer _currentRenderer;
@@ -21,6 +23,7 @@ public class DrawRaycast : MonoBehaviour
     void Start()
     {
         lineRenderer = this.GetComponent<LineRenderer>();
+        //renderer= heldObj.GetComponent<MeshRenderer>();
     }
 
     void Update() => CreateLine();
@@ -35,7 +38,7 @@ public class DrawRaycast : MonoBehaviour
 
             heldObj.GetComponent<MeshRenderer>().enabled = false;     
         }
-        else
+        else 
             heldObj.GetComponent<MeshRenderer>().enabled = true;
     }
     
@@ -54,19 +57,16 @@ public class DrawRaycast : MonoBehaviour
         }
     }
 
-    public void UpdateRayVisualization(Vector3 startPosition, Vector3 endPosition, Color linecolor)
+    public void UpdateRayVisualization(Vector3 startPosition, Vector3 endPosition, Color lineColor)
     {
         if (lineRenderer != null)
         {
             lineRenderer.enabled = true;
             lineRenderer.SetPosition(0, startPosition);
             lineRenderer.SetPosition(1, endPosition);
-            lineRenderer.material.color = linecolor;
+            lineRenderer.material.color = lineColor;
         }
-        else if (lineRenderer != null)
-        {
-            lineRenderer.enabled = false;
-        }
+        
     }
 
    
