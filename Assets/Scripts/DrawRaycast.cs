@@ -1,21 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))]
 public class DrawRaycast : MonoBehaviour
 {
-    [SerializeField] private GameObject baseObj;
+    [SerializeField] public GameObject baseObj;
     [SerializeField] private GameObject heldObj;
-    [SerializeField] Color lineColor;
 
-    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] public Color lineColor;
+
+    private LineRenderer lineRenderer;
+
 
     private bool isGrabbed=false;
+    //private Renderer _currentRenderer;
     //[SerializeField] private LayerMask layer;
     // Start is called before the first frame update
     void Start()
     {
-        
+        lineRenderer = this.GetComponent<LineRenderer>();
     }
 
     void Update() => CreateLine();
@@ -25,16 +30,13 @@ public class DrawRaycast : MonoBehaviour
     {
         if(isGrabbed)
         {
-        lineRenderer.enabled=true;
-        lineRenderer.SetPosition(0, baseObj.transform.position);
-        lineRenderer.SetPosition(1, heldObj.transform.position);
+           
+        UpdateRayVisualization(baseObj.transform.position, heldObj.transform.position, heldObj.GetComponent<MeshRenderer>().material.color);
 
-        heldObj.GetComponent<MeshRenderer>().enabled=false;
-
-        lineRenderer.material.color= lineColor;
+            heldObj.GetComponent<MeshRenderer>().enabled = false;     
         }
         else
-            heldObj.GetComponent<MeshRenderer>().enabled=true;
+            heldObj.GetComponent<MeshRenderer>().enabled = true;
     }
     
 
@@ -52,4 +54,20 @@ public class DrawRaycast : MonoBehaviour
         }
     }
 
+    public void UpdateRayVisualization(Vector3 startPosition, Vector3 endPosition, Color linecolor)
+    {
+        if (lineRenderer != null)
+        {
+            lineRenderer.enabled = true;
+            lineRenderer.SetPosition(0, startPosition);
+            lineRenderer.SetPosition(1, endPosition);
+            lineRenderer.material.color = linecolor;
+        }
+        else if (lineRenderer != null)
+        {
+            lineRenderer.enabled = false;
+        }
+    }
+
+   
 }
