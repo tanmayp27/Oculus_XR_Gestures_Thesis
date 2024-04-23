@@ -13,7 +13,7 @@ public class DrawRaycast : MonoBehaviour
 
     private LineRenderer lineRenderer;
 
-     [HideInInspector] public MeshRenderer renderer;
+    //[HideInInspector] public MeshRenderer renderer;
 
 
     private bool isGrabbed=false;
