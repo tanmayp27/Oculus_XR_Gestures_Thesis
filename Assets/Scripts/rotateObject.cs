@@ -39,6 +39,6 @@ public class rotateObject : MonoBehaviour
     public void RotateObject(float direction)
     {
         Vector3 rotationAxis = axis.position;
-        transform.RotateAround(rotationAxis, Vector3.up, rotationAngle * direction);
+        transform.RotateAround(rotationAxis, Vector3.forward, rotationAngle * direction);
     }
 }

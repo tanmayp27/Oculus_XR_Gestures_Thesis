@@ -11,8 +11,8 @@ public class RotationHandler : MonoBehaviour
 
     bool isGrabbed = false;
 
-    private float preAngle=0;
-    private float postAngle=0;
+    private float preAngle=0f;
+    private float postAngle=0f;
     private float deltaAngle;
     
     // Start is called before the first frame update
@@ -29,14 +29,14 @@ public class RotationHandler : MonoBehaviour
             postAngle= transform.rotation.eulerAngles.y;
 
             deltaAngle = Mathf.DeltaAngle(preAngle, postAngle);
-            if(deltaAngle > 0)
+            if (deltaAngle > 0)
             {
-                target.transform.Rotate(Vector3.forward, -(target.transform.rotation.y + rotationAngle) * rotationSpeed);
+                target.transform.Rotate(Vector3.forward, -(target.transform.rotation.y + rotationAngle) * rotationSpeed * deltaAngle);
             }
             
             else if (deltaAngle < 0)
             {
-                target.transform.Rotate(Vector3.forward, (target.transform.rotation.y +rotationAngle) * rotationSpeed);
+                target.transform.Rotate(Vector3.forward, (target.transform.rotation.y +rotationAngle) * rotationSpeed *deltaAngle);
             }
 
 

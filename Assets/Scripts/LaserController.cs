@@ -75,11 +75,5 @@ public class LaserController : MonoBehaviour
         }
     }
 
-    private void ResetLine()
-    {
-        if(lineRenderer != null)
-        {
-            lineRenderer.positionCount = 0;
-        }
-    }
+    
 }
