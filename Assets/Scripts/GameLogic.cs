@@ -34,7 +34,7 @@ public class GameLogic : MonoBehaviour
         }
         else if (!correctNode)
         {
-            Debug.Log("---Mistake!----");
+            //Debug.Log("---Mistake!----");
         }
         else if(circuitsConnected == totalCircuits)
         {

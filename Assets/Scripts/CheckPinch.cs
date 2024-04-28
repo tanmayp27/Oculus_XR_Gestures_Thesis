@@ -9,7 +9,7 @@ public class CheckPinch : MonoBehaviour
     [SerializeField] private AudioClip releaseSound;
     [SerializeField] private AudioSource audioSource;
 
-    public bool _hasPinched;
+    public bool _hasPinched=false;
     private bool _isIndexFingerPinching;
     private float _pinchStrength;
     private OVRHand.TrackingConfidence _trackingConfidence;
@@ -31,7 +31,12 @@ public class CheckPinch : MonoBehaviour
         if (!_hasPinched && _isIndexFingerPinching && _trackingConfidence == OVRHand.TrackingConfidence.High && handPointer.CurrentTarget)
         {
             _hasPinched = true;
-            handPointer.showRaycast = true;
+            handPointer.checkHeld = true;
+            /* if(!handPointer.showRaycast)
+            {
+                handPointer.showRaycast = true;
+            } */
+            
             if (audioSource != null)
             {
                 audioSource.PlayOneShot(pinchSound);
@@ -40,7 +45,12 @@ public class CheckPinch : MonoBehaviour
         else if (_hasPinched && !_isIndexFingerPinching)
         {
             _hasPinched = false;
-            handPointer.showRaycast = false;
+            handPointer.checkHeld = false;
+            /* if (handPointer.showRaycast)
+            {
+                handPointer.showRaycast = false;
+            } */
+            
             if (audioSource != null)
             {
                 audioSource.PlayOneShot(releaseSound);

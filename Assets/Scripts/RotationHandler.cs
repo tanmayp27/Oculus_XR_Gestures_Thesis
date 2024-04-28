@@ -19,6 +19,9 @@ public class RotationHandler : MonoBehaviour
     void Start()
     {
         preAngle=transform.rotation.eulerAngles.y;
+
+        //float randomAngle= Random.Range(-180, 0);
+        //target.transform.rotation = Quaternion.Euler(target.transform.rotation.x, randomAngle, target.transform.rotation.z);
     }
 
     // Update is called once per frame
@@ -28,15 +31,18 @@ public class RotationHandler : MonoBehaviour
         {
             postAngle= transform.rotation.eulerAngles.y;
 
-            deltaAngle = Mathf.DeltaAngle(preAngle, postAngle);
-            if (deltaAngle > 0)
+            deltaAngle = postAngle-preAngle;
+            //Debug.Log("Change in angle = " + deltaAngle);
+            if (deltaAngle > 0.5)
             {
-                target.transform.Rotate(Vector3.forward, -(target.transform.rotation.y + rotationAngle) * rotationSpeed * deltaAngle);
+                //Debug.Log("Rotating Forward");
+                target.transform.Rotate(Vector3.forward, -(target.transform.rotation.y + rotationAngle) * rotationSpeed * Mathf.Abs(deltaAngle));
             }
             
-            else if (deltaAngle < 0)
+            else if (deltaAngle < 0.5)
             {
-                target.transform.Rotate(Vector3.forward, (target.transform.rotation.y +rotationAngle) * rotationSpeed *deltaAngle);
+                //Debug.Log("Rotating Backward");
+                target.transform.Rotate(Vector3.forward, (target.transform.rotation.y +rotationAngle) * rotationSpeed * Mathf.Abs(deltaAngle));
             }
 
 

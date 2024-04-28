@@ -2,11 +2,13 @@ using Oculus.Interaction.Input;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class HandPointer : MonoBehaviour
 {
     public OVRHand rightHand;
     public GameObject CurrentTarget { get; private set; }
+    public GameObject SecondTarget { get; private set; }
 
     [SerializeField] public bool showRaycast = false;
     
@@ -17,9 +19,18 @@ public class HandPointer : MonoBehaviour
     private Color _originalColor;
     private Color _highlightColor;
     private Renderer _currentRenderer;
-    private CheckPinch pinch;
 
-    
+    public bool checkHeld = false;
+    //private CheckPinch pinch;
+
+    //private float amount=1f;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //pinch = GetComponent<CheckPinch>();
+    }
 
     // Update is called once per frame
     void Update() => CheckHandPointer(rightHand);
@@ -29,37 +40,35 @@ public class HandPointer : MonoBehaviour
         
         if(Physics.Raycast(hand.PointerPose.position, hand.PointerPose.forward, out RaycastHit hit, Mathf.Infinity, targetLayer))
         {
-            if (CurrentTarget != hit.collider.transform.gameObject)
+            if (CurrentTarget != hit.transform.gameObject)
             {
-                CurrentTarget = hit.collider.transform.gameObject;
+                CurrentTarget = hit.transform.gameObject;
                 //Debug.Log(CurrentTarget);
                 _currentRenderer = CurrentTarget.GetComponent<Renderer>();
                 _originalColor=_currentRenderer.material.color;
-                _highlightColor = (_originalColor + Color.grey) / 4;
+                Color newColor = (_originalColor-Color.gray);
+                _highlightColor = newColor;
                 _currentRenderer.material.color = _highlightColor;
 
             }
-            while (pinch._hasPinched)
-            {
-                UpdateRayVisualization(CurrentTarget.transform.position, hand.PointerPose.position, true);
-            }
-            
+
+            UpdateRayVisualization_Puzzle(CurrentTarget.transform.position, hand.PointerPose.position, true);
 
 
         }
         else
         {
-            if (CurrentTarget != null)
+            if (CurrentTarget != null && !checkHeld)
             {
                 _currentRenderer.material.color = _originalColor;
                 CurrentTarget = null;
 
             }
-            UpdateRayVisualization(hand.PointerPose.position,hand.PointerPose.position+hand.PointerPose.forward*1000, false);
+            UpdateRayVisualization_Puzzle(hand.PointerPose.position,hand.PointerPose.position+hand.PointerPose.forward*1000, false);
         }
     }
 
-    private void UpdateRayVisualization(Vector3 startPosition, Vector3 endPosition, bool hitSomething)
+    private void UpdateRayVisualization_Puzzle(Vector3 startPosition, Vector3 endPosition, bool hitSomething)
     {
         if(showRaycast && lineRenderer !=null)
         {
@@ -68,17 +77,22 @@ public class HandPointer : MonoBehaviour
             lineRenderer.SetPosition(1, endPosition);
             lineRenderer.material.color=hitSomething ? Color.green : Color.red;
         }
-        else if (lineRenderer !=null)
+        else if (lineRenderer!=null)
         {
             lineRenderer.enabled = false;
         }
     }
-    
-    // Start is called before the first frame update
-    void Start()
+
+   /* private IEnumerator DrawLine(OVRHand hand)
     {
-        pinch = GetComponent<CheckPinch>();
-    }
+        while (checkHeld)
+        {
+            UpdateRayVisualization_Puzzle(CurrentTarget.transform.position, hand.PointerPose.position, true);
+        }
+        yield return null;
+    } */
+    
+    
 
     
     

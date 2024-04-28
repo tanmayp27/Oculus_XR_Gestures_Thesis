@@ -34,7 +34,7 @@ public class DrawRaycast : MonoBehaviour
         if(isGrabbed)
         {
            
-        UpdateRayVisualization(baseObj.transform.position, heldObj.transform.position, heldObj.GetComponent<MeshRenderer>().material.color);
+        UpdateRayVisualization(baseObj.transform.position, heldObj.transform.position, lineColor);
 
             heldObj.GetComponent<MeshRenderer>().enabled = false;     
         }
